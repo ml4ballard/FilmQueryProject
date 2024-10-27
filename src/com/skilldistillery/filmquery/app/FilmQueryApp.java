@@ -41,7 +41,7 @@ public class FilmQueryApp {
 	boolean correctAns = false;                 // Loop until user exits
 	
     while (!correctAns) {
-	  System.out.printf("\n\t\tWelcome to the Film Query Menu\n");
+	  System.out.printf("\n\n\t\tWelcome to the Film Query Menu\n");
 	  System.out.println();
 	  System.out.println();
 	  System.out.printf("\t\t1. Find by film id (findFilmById) \n");				      
@@ -56,32 +56,37 @@ public class FilmQueryApp {
 		int enterID = 1;	
 		switch (selection) {
 		case "1":             //get film id			
-				System.out.printf("\n\t\tEnter film id:");
+				System.out.printf("\n\t\tEnter film id:\n");
 				enterID = input.nextInt();
+				input.nextLine();
 				Film film;
 				try {
 					film = db.findFilmById(enterID);
 					System.out.println(film.getTitle() + " " + film.getDescription());
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}
+				}				
 				break;		
 		case "2":              //get actor id					 	     
 				System.out.printf("\t\tEnter actor id:\t\n\n");
 				System.out.println();
-				enterID = input.nextInt();				
+				enterID = input.nextInt();
+				input.nextLine();
 				break;				
 		case "3":             //get film id to find Actor				 	     
 				System.out.printf("\t\tEnter film id to find actor:\t\n\n");
 				System.out.println();
 				enterID = input.nextInt();
+				input.nextLine();
 				break;				
 		case "4":            //exit the program
 			    correctAns = true;
 			    System.out.printf("\n\t\tEnjoy your movie! Have some popcorn\t\n\n");
+			    input.nextLine();
 			    break;
 	    default:
 	    	    System.out.printf("\n\t\tPlease choose a valid option\t\n\n");
+	    	    input.nextLine();
 			    break;
 		} // end switch selection
 					      			
