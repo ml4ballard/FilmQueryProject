@@ -10,11 +10,12 @@ public interface DatabaseAccessor {  //You have provided a method to read the be
 
 	public Film findFilmById(int filmId) throws SQLException;
 
-	public Actor findActorById(int actorId);
+	public Actor findActorById(int actorId) throws SQLException;
 
-	public List<Actor> findActorsByFilmId(int filmId);
+	public List<Actor> findActorsByFilmId(int filmId) throws SQLException;
 	
 	// public xxxxxxx findActorsByFilmId ( int filmId);
 	// will retunrn a list of actor id's
 	// already given see above
-}
+	
+} //end DatabaseAccessor

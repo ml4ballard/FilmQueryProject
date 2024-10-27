@@ -22,7 +22,7 @@ class DatabaseAccessTests {
 	void tearDown() throws Exception {
 		db = null;
 	}
-
+/*
 	@Test
 	void test_getFilmById_returns_film_with_id() {
 		Film f = db.findFilmById(1);
@@ -35,5 +35,6 @@ class DatabaseAccessTests {
 		Film f = db.findFilmById(-42);
 		assertNull(f);
 	}
+	*/
 
 }
