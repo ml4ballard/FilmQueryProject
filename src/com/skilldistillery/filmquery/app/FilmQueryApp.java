@@ -44,16 +44,20 @@ public class FilmQueryApp {
 	  System.out.printf("\n\n\t\tWelcome to the Film Query Menu\n");
 	  System.out.println();
 	  System.out.println();
-	  System.out.printf("\t\t1. Find by film id (findFilmById) \n");				      
-	  System.out.printf("\t\t2. Find by actor id (findActorById) \n");				      
+	  System.out.printf("\t\t1. Find by film id (findFilmById) \n");
+	  System.out.printf("\t\t2. Look up a film by a search keyword (findActorById) \n");
+//	  System.out.printf("\t\t2. Find by actor id (findActorById) \n");				      
 	  System.out.printf("\t\t3. Find Actor by film ID (findActorsByFilmId) \n");
 	  System.out.printf("\t\t4. Go watch your film,  say goodbye\n\n");
 	  System.out.printf("\t\tSelection:" );
 	  String selection = input.nextLine();
+// attempt to correct input issue
+//	  input.nextLine();
 					      				      
     // Validate and act on user input
 			
-		int enterID = 1;	
+		int enterID = 1;
+		String searchWord = " ";
 		switch (selection) {
 		case "1":             //get film id			
 				System.out.printf("\n\t\tEnter film id:\n");
@@ -62,16 +66,24 @@ public class FilmQueryApp {
 				Film film;
 				try {
 					film = db.findFilmById(enterID);
+					if (film == null) {
+					    System.out.println("No film found with the given ID.");
+					} else {
 					System.out.println(film.getTitle() + " " + film.getDescription());
+					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}				
 				break;		
 		case "2":              //get actor id					 	     
-				System.out.printf("\t\tEnter actor id:\t\n\n");
+				System.out.printf("\t\tEnter search keyword:\t\n\n");
 				System.out.println();
-				enterID = input.nextInt();
-				input.nextLine();
+				searchWord = input.nextLine();
+				try { 
+					film = db.findFilmsBySearchWord(searchWord);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
 				break;				
 		case "3":             //get film id to find Actor				 	     
 				System.out.printf("\t\tEnter film id to find actor:\t\n\n");

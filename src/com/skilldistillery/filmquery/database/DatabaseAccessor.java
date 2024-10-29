@@ -9,6 +9,8 @@ import com.skilldistillery.filmquery.entities.Film;
 public interface DatabaseAccessor {  //You have provided a method to read the below
 
 	public Film findFilmById(int filmId) throws SQLException;
+	
+	public Film findFilmsBySearchWord(String searchWord) throws SQLException;
 
 	public Actor findActorById(int actorId) throws SQLException;
 
