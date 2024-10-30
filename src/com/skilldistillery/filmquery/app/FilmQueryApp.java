@@ -45,14 +45,11 @@ public class FilmQueryApp {
 	  System.out.println();
 	  System.out.println();
 	  System.out.printf("\t\t1. Find by film id (findFilmById) \n");
-	  System.out.printf("\t\t2. Look up a film by a search keyword (findActorById) \n");
-//	  System.out.printf("\t\t2. Find by actor id (findActorById) \n");				      
+	  System.out.printf("\t\t2. Look up a film by a search keyword (findFilmsBySearchWord) \n");
 	  System.out.printf("\t\t3. Find Actor by film ID (findActorsByFilmId) \n");
 	  System.out.printf("\t\t4. Go watch your film,  say goodbye\n\n");
 	  System.out.printf("\t\tSelection:" );
 	  String selection = input.nextLine();
-// attempt to correct input issue
-//	  input.nextLine();
 					      				      
     // Validate and act on user input
 			
@@ -69,7 +66,9 @@ public class FilmQueryApp {
 					if (film == null) {
 					    System.out.println("No film found with the given ID.");
 					} else {
-					System.out.println(film.getTitle() + " " + film.getDescription());
+				    System.out.println("Title:" + film.getTitle() + "  Release Year: " + film.getReleaseYear() + "  rating: " + film.getRating()); 
+				    System.out.println("Description: " + film.getDescription() + "\n");  	
+//					System.out.println(film.getTitle() + " " + film.getDescription());
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

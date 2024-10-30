@@ -77,6 +77,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
         ResultSet rs = ps.executeQuery();
 
         int numberOfFilms = 0;
+//        System.out.println("\n");
         
         while ( rs.next() ) {      	
 			 int id = rs.getInt("id");
@@ -90,18 +91,20 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			double replacementCost = rs.getDouble("replacement_cost");
 */
 			String rating = rs.getString("rating");
-//			String specialFeatures = rs.getString("special_features");	
+//			String specialFeatures = rs.getString("special_features");	1
+			
 
-			numberOfFilms++; 
-			System.out.println("Number of films: " + numberOfFilms);
-//	        System.out.println("Film ID:" + id + "\tFilm Name:" + title + "\t\t\tDescription: " + description);
+			numberOfFilms++; 			
 	        System.out.println("Title:" + title + "Release Year: " + releaseYear + " rating: " + rating); 
 	        System.out.println("Description: " + description + "\n");  
         } //end while	 
         if (numberOfFilms == 0) {
 		    System.out.println("No film name or description found containing" + " searchWord.");
 		} 
-		
+        else {
+			System.out.println("Number of films found with searchword " + searchWord + ": " + numberOfFilms);
+		}
+	
 		return null;
 	} //end findFilmsBySearchWord
 	
