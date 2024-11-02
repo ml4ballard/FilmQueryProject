@@ -16,7 +16,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -63,6 +62,31 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		
 	} //end findFilmById
 	
+// Find film language
+	@Override
+	public Film findFilmLanguage(int filmId, String languageName) throws SQLException {	
+		Film film = null;
+		String name = "student";
+		String pwd = "student";
+		
+		String sql = "SELECT language.name FROM film JOIN language on language.id = film.language_id WHERE film.id = ?";
+		
+		Connection conn = DriverManager.getConnection(URL, name, pwd);
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, filmId);
+		ResultSet rs = ps.executeQuery();
+		
+		while ( rs.next() ) {
+	       languageName = rs.getString("name");
+	       System.out.println("Language: " + languageName);
+		} //end while
+		
+	ps.close();
+	conn.close();	
+	return film;
+
+	} //end findFilmLanguage
+	
 	@Override
 	public Film findFilmsBySearchWord(String searchWord) throws SQLException {
 		String name = "student";
@@ -77,41 +101,34 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
         ResultSet rs = ps.executeQuery();
 
         int numberOfFilms = 0;
-//        System.out.println("\n");
+        
         
         while ( rs.next() ) {      	
-			 int id = rs.getInt("id");
-			 String title = rs.getString("title");
-			 String description = rs.getString("description");
-			 Integer releaseYear = rs.getInt("release_year");
-/*			int languageId = rs.getInt("language_id");
-			int rentalDuration = rs.getInt("rental_duration");
-			double rentalRate = rs.getDouble("rental_rate");
-			int length = rs.getInt("length");
-			double replacementCost = rs.getDouble("replacement_cost");
-*/
+			String title = rs.getString("title");
+			String description = rs.getString("description");
+			Integer releaseYear = rs.getInt("release_year");
 			String rating = rs.getString("rating");
-//			String specialFeatures = rs.getString("special_features");	1
 			
-
 			numberOfFilms++; 			
 	        System.out.println("Title:" + title + "Release Year: " + releaseYear + " rating: " + rating); 
 	        System.out.println("Description: " + description + "\n");  
-        } //end while	 
+        } //end while	
+        
         if (numberOfFilms == 0) {
 		    System.out.println("No film name or description found containing" + " searchWord.");
 		} 
         else {
 			System.out.println("Number of films found with searchword " + searchWord + ": " + numberOfFilms);
 		}
-	
+		ps.close();
+		conn.close();	
 		return null;
+		
 	} //end findFilmsBySearchWord
 	
 
 	@Override
 	public Actor findActorById(int actorId) {
-		// TODO Auto-generated method stub
 		return null;
 	} //end findActorById
 

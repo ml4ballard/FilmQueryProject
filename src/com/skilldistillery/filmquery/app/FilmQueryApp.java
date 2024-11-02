@@ -17,7 +17,7 @@ public class FilmQueryApp {
     app.launch();
 	}
 
-	private void test() {
+/*	private void test() {
 		Film film;
 		try {
 			film = db.findFilmById(722);
@@ -25,7 +25,7 @@ public class FilmQueryApp {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	} //end test
+	} //end test */
 
 	private void launch() {
 		Scanner input = new Scanner(System.in);
@@ -55,6 +55,7 @@ public class FilmQueryApp {
 			
 		int enterID = 1;
 		String searchWord = " ";
+		String filmLang = " ";
 		switch (selection) {
 		case "1":             //get film id			
 				System.out.printf("\n\t\tEnter film id:\n");
@@ -69,6 +70,7 @@ public class FilmQueryApp {
 				    System.out.println("Title:" + film.getTitle() + "  Release Year: " + film.getReleaseYear() + "  rating: " + film.getRating()); 
 				    System.out.println("Description: " + film.getDescription() + "\n");  	
 //					System.out.println(film.getTitle() + " " + film.getDescription());
+				    film = db.findFilmLanguage(enterID, filmLang);
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

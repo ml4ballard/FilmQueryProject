@@ -10,6 +10,8 @@ public interface DatabaseAccessor {  //You have provided a method to read the be
 
 	public Film findFilmById(int filmId) throws SQLException;
 	
+	public Film findFilmLanguage(int filmId,  String languageName) throws SQLException;
+	
 	public Film findFilmsBySearchWord(String searchWord) throws SQLException;
 
 	public Actor findActorById(int actorId) throws SQLException;
