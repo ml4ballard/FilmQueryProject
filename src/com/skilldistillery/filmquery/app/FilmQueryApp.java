@@ -1,6 +1,8 @@
 package com.skilldistillery.filmquery.app;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
@@ -69,8 +71,7 @@ public class FilmQueryApp {
 					} else {
 				    System.out.println("Title:" + film.getTitle() + "  Release Year: " + film.getReleaseYear() + "  rating: " + film.getRating()); 
 				    System.out.println("Description: " + film.getDescription() + "\n");  	
-//					System.out.println(film.getTitle() + " " + film.getDescription());
-				    film = db.findFilmLanguage(enterID, filmLang);
+				   
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -81,7 +82,10 @@ public class FilmQueryApp {
 				System.out.println();
 				searchWord = input.nextLine();
 				try { 
-					film = db.findFilmsBySearchWord(searchWord);
+				List <Film>	films = db.findFilmsBySearchWord(searchWord);
+				for (Film film2 : films) {
+					System.out.println(film2);
+				}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}				

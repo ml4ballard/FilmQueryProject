@@ -1,5 +1,6 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Film {
@@ -14,18 +15,10 @@ public class Film {
 	private double replacementCost = 19.99;
 	private String rating = "G";
 	private String specialFeatures;
+	private String language;
 	
-	/* private List<Actor> actors;  do getters and setters
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
+	private List<Actor> actors;   //  do getters and setters
+	 
 
 	// methods
 
@@ -33,11 +26,19 @@ public class Film {
 //		super(); Dee's does not say super
 	}
 
-	public Film(int id, String title, int languageId) {
+	public Film(int id, String title, String description) {
 		super();
 		this.id = id;
 		this.title = title;
-		this.languageId = languageId;
+		this.description = description;
+	}
+	
+	public Film(int id, String title, String description, String language) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.language = language;
 	}
 	
 
@@ -145,10 +146,27 @@ public class Film {
 		this.specialFeatures = specialFeatures;
 	}
 
+	
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(description, id, languageId, length, rating, releaseYear, rentalDuration, rentalRate,
 				replacementCost, specialFeatures, title);
+	}
+
+	public List<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Actor> actors) {
+		this.actors = actors;
 	}
 
 	@Override
@@ -173,7 +191,7 @@ public class Film {
 		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
 				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
 				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + "]";
+				+ ", specialFeatures=" + specialFeatures + ", language=" + language + ", actors=" + actors + "]";
 	}
 
 

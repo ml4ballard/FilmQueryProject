@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
@@ -46,9 +47,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			 double replacementCost = rs.getDouble("replacement_cost");
 			 String rating = rs.getString("rating");
 			 String specialFeatures = rs.getString("special_features");
+			 String language = findFilmLanguage(id);
 
-			film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures);
-	
+			film = new Film(id, title, description, releaseYear, languageId, rentalDuration,
+					rentalRate, length, replacementCost, rating, specialFeatures);
+	        film.setLanguage(language);
 			// the film exists now
 			// now set its actors
 			
@@ -64,34 +67,33 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	
 // Find film language
 	@Override
-	public Film findFilmLanguage(int filmId, String languageName) throws SQLException {	
-		Film film = null;
+	public String findFilmLanguage(int filmId) throws SQLException {	
 		String name = "student";
 		String pwd = "student";
-		
+		String languageName = " ";
 		String sql = "SELECT language.name FROM film JOIN language on language.id = film.language_id WHERE film.id = ?";
 		
 		Connection conn = DriverManager.getConnection(URL, name, pwd);
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, filmId);
-		ResultSet rs = ps.executeQuery();
+		PreparedStatement psLang = conn.prepareStatement(sql);
+		psLang.setInt(1, filmId);
+		ResultSet rsLang = psLang.executeQuery();
 		
-		while ( rs.next() ) {
-	       languageName = rs.getString("name");
-	       System.out.println("Language: " + languageName);
+		while ( rsLang.next() ) {
+	       languageName = rsLang.getString("name");
+//	       System.out.println("Language: " + languageName);
 		} //end while
 		
-	ps.close();
+	psLang.close();
 	conn.close();	
-	return film;
+	return languageName;
 
 	} //end findFilmLanguage
 	
 	@Override
-	public Film findFilmsBySearchWord(String searchWord) throws SQLException {
+	public List<Film> findFilmsBySearchWord(String searchWord) throws SQLException {
 		String name = "student";
 		String pwd = "student";
-		
+		List <Film> films = new ArrayList<>();
         String sql = "SELECT * FROM film WHERE film.title LIKE ? OR film.description LIKE ?";
 
         Connection conn = DriverManager.getConnection(URL, name, pwd);
@@ -103,15 +105,18 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
         int numberOfFilms = 0;
         
         
-        while ( rs.next() ) {      	
+        while ( rs.next() ) { 
+			int id = rs.getInt("id");
 			String title = rs.getString("title");
 			String description = rs.getString("description");
 			Integer releaseYear = rs.getInt("release_year");
 			String rating = rs.getString("rating");
+			String language = findFilmLanguage(id);
 			
 			numberOfFilms++; 			
-	        System.out.println("Title:" + title + "Release Year: " + releaseYear + " rating: " + rating); 
-	        System.out.println("Description: " + description + "\n");  
+//	        System.out.println("Title:" + title + "Release Year: " + releaseYear + " rating: " + rating); 
+//	        System.out.println("Description: " + description + "\n");  
+	        films.add(new Film(id, title, description, language));
         } //end while	
         
         if (numberOfFilms == 0) {
@@ -122,7 +127,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		ps.close();
 		conn.close();	
-		return null;
+		return films;
 		
 	} //end findFilmsBySearchWord
 	
